@@ -21,7 +21,7 @@ Acesso a swagger-ui http://localhost:8080/swagger-ui/
 
 Existem dois modelos para serviços, People e Student.
 
-O People utiliza base de dados MYSQL_DATABASE
+O People utiliza base de dados MySQL
 
 O Student utiliza base de dados redis
 
