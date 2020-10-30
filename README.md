@@ -31,6 +31,8 @@ A aplicação é tanto produtora de mensagem AMQ quanto consumidora.
 
 ### Criar no OpenShift
 ```
+mvn clean package -DskipTests
+
 oc new-build java:11 \
   --name=demo-app \
   --binary=true
@@ -47,3 +49,12 @@ oc set env --prefix=REDIS_ --from=secret/redis dc/demo-app
 
 oc expose service demo-app
 ```
+
+Para fazer update na app e publicar no openshift basta executar
+
+```
+mvn clean package -DskipTests
+oc start-build bc/demo-app \
+  --from-file=target/service1-0.0.1-SNAPSHOT.jar \
+  --follow --wait=true
+```  
