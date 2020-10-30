@@ -28,3 +28,22 @@ O Student utiliza base de dados redis
 Os serviços providos pelo Controller AMQ realiza persistência nas bases e publica mensagem no AMQ.
 
 A aplicação é tanto produtora de mensagem AMQ quanto consumidora.
+
+### Criar no OpenShift
+```
+oc new-build java:11 \
+  --name=demo-app \
+  --binary=true
+
+oc start-build bc/demo-app \
+  --from-file=target/service1-0.0.1-SNAPSHOT.jar \
+  --follow --wait=true
+
+oc new-app demo-app --name demo-app
+
+oc set env --from=secret/mysql dc/demo-app
+oc set env --prefix=RABBITMQ_ --from=secret/rabbitmq-cluster-secret dc/demo-app
+oc set env --prefix=REDIS_ --from=secret/redis dc/demo-app
+
+oc expose service demo-app
+```
